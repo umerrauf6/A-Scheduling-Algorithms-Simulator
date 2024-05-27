@@ -4,13 +4,31 @@
 This repository contains the backend server for the Task Scheduling front-end. The backend is responsible for processing the logical model, running scheduling algorithms, and communicating with the frontend. It is built with FastAPI and provides a RESTful API for interaction with the [frontend](https://eslab2.pages.dev/).
 
 ## Table of Contents
+- [Getting Started](#getting-started)
 - [Technologies Used](#technologies-used)
 - [Features](#features)
 - [API Endpoints](#api-endpoints)
 - [Input and Output Schemas](#input-and-output-formats)
-- [Running the Server](#running-the-server)
 - [Components](#components)
 - [Contributing](#contributing)
+
+## Getting Started
+
+1. Clone the repository:
+    git clone [https://github.com/linem-davton/graphdraw-eslab-backend.git](https://github.com/linem-davton/graphdraw-eslab-backend.git)
+
+2. Navigate to the project directory:
+    cd graphdraw-eslab-backend
+
+3. Install dependencies:
+    pip install -r requirements.txt
+
+5. Start the development server:
+   python3 src/backend.py
+
+6. Access the API:
+   The backend server will be running at http://localhost:8000.
+  If everything is set up correctly, you should see the following message: {"Hello": "World"}
 
 ## Technologies Used
 
@@ -133,23 +151,7 @@ The backend expects input in the following [JSON](https://developer.mozilla.org/
     ]
     }
     ```
-## Running the Server
 
-1. Clone the repository:
-    git clone https://github.com/linem-davton/graphdraw-eslab-backend.git
-
-2. Navigate to the project directory:
-    cd graphdraw-eslab-backend
-
-3. Install dependencies:
-    pip install -r requirements.txt
-
-5. Start the development server:
-   python3 src/backend.py
-
-6. Access the API:
-   The backend server will be running at http://localhost:8000.
-  If everything is set up correctly, you should see the following message: {"Hello": "World"}
 
 ## Components
 

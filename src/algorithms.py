@@ -84,7 +84,7 @@ def ll_singlecore(application_data):
     Schedule jobs on a single core using the Least Laxity (LL) strategy.
     This function schedules jobs based on their laxity, with the job having the least laxity being scheduled first.
 
-    ..todo:: Implement Least Laxity (LL) algorithm.
+    .. todo:: Implement Least Laxity (LL) algorithm.
 
     Args:
         application_data (dict): Job data including dependencies represented by messages between jobs.
