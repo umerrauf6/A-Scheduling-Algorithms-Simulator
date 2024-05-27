@@ -18,6 +18,7 @@ from http.client import HTTPException
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+import json
 from config import SERVER_PORT, SERVER_HOST
 
 import algorithms as alg
@@ -62,17 +63,17 @@ def schedule_jobs(data: dict):
               - schedule4: Schedule using Least Laxity (LL) on single-core.
     """
 
-    print("Received JSON data:", data)
+    print("Received JSON data:", json.dumps(data, indent=4))
     application_data = data.get("application")
     platform_data = data.get("platform")
 
     if not application_data or not platform_data:
         raise HTTPException(status_code=400, detail="Invalid data format")
 
-    ldf_schedule = alg.ldf_multicore(application_data, platform_data)
-    edf_schedule = alg.edf_multicore(application_data, platform_data)
-    rms_schedule = alg.ldf_singlecore(application_data)
-    ll_schedule = alg.edf_singlecore(application_data)
+    ldf_schedule = alg.ldf_singlecore(application_data)
+    edf_schedule = alg.edf_singlecore(application_data)
+    rms_schedule = alg.rms_singlecore(application_data)
+    ll_schedule = alg.ll_singlecore(application_data)
 
     response = {
         "schedule1": ldf_schedule,
@@ -81,7 +82,7 @@ def schedule_jobs(data: dict):
         "schedule4": ll_schedule,
     }
 
-    print(response)
+    print(json.dumps(response, indent=4))
     return response
 
 
