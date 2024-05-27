@@ -1,47 +1,43 @@
+# Task Scheduling Backend
 
 
-
-
-## Description
 This repository contains the backend server for the Task Scheduling front-end. The backend is responsible for processing the logical model, running scheduling algorithms, and communicating with the frontend. It is built with FastAPI and provides a RESTful API for interaction with the [frontend](https://eslab2.pages.dev/).
 
 ## Table of Contents
-- [Description](#description)
 - [Technologies Used](#technologies-used)
 - [Features](#features)
 - [API Endpoints](#api-endpoints)
-- [Input and Output Formats](#input-and-output-formats)
+- [Input and Output Schemas](#input-and-output-formats)
 - [Running the Server](#running-the-server)
 - [Components](#components)
 - [Contributing](#contributing)
 
-
 ## Technologies Used
-- Python 3
-- FastAPI
-- NetworkX (for graph processing)
-- Uvicorn (ASGI server)
-- CORS middleware for cross-origin requests
+
+- [Python 3](https://www.python.org/about/gettingstarted/)
+- [FastAPI](https://fastapi.tiangolo.com/learn/)
+- [NetworkX](https://networkx.org/documentation/stable/tutorial.html)
+- [Uvicorn](https://www.uvicorn.org/)
 
 ## Features
-- **RESTful API**: Provides endpoints for scheduling tasks and retrieving schedules.
+- **[RESTful](https://en.wikipedia.org/wiki/REST) API**: Provides endpoints for scheduling tasks and retrieving schedules.
 - **Multiple Scheduling Algorithms**: Implements LDF and EDF scheduling algorithms for task scheduling.
 - **Input Validation**: Ensures valid data format for processing.
-- **Configurable**: Backend server configuration can be adjusted through `config.json`.
-- **Cross-Origin Resource Sharing (CORS)**: Enabled for specified origins.
+- **[Cross-Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) (CORS)**: Enabled for specified origins.
 
 ## API Endpoints
 
 - **POST /schedule_jobs**: Accepts a task graph in JSON format and returns the scheduled tasks using four different algorithms.
 - **GET /get_jobs**: Endpoint for retrieving job schedules.
 - **GET /**: Root endpoint to verify if the server is running.
-- **GET /items/{item_id}**: Sample endpoint for retrieving item details.
 
-## Input and Output Schemas for /schedule_jobs Endpoint
+Learn more about [HTTP Methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
 
-### Input Schema
+## Input and Output Schemas
 
-The backend expects input in the following JSON format:
+### API Input Schema for /schedule_jobs
+
+The backend expects input in the following [JSON](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON) schema:
 
     ```json
     {
@@ -85,9 +81,10 @@ The backend expects input in the following JSON format:
     }
     ```
 
-### Output Schema
+### Output Schema for /schedule_jobs
 
-The backend returns output in the following JSON format:
+    The backend returns output in the following JSON format:
+
     ```json
     {
     "schedule1": [
@@ -136,7 +133,6 @@ The backend returns output in the following JSON format:
     ]
     }
     ```
-    
 ## Running the Server
 
 1. Clone the repository:
@@ -148,13 +144,12 @@ The backend returns output in the following JSON format:
 3. Install dependencies:
     pip install -r requirements.txt
 
+5. Start the development server:
+   python3 src/backend.py
 
-4. Start the development server:
-  python src/backend.py
-
-5. Access the API:
-   The backend server starts at http://localhost:8000.
-  Verfiy the server is running by visiting http://localhost:8000 in a web browser, and you should see a message "{"Hello":"World"}".
+6. Access the API:
+   The backend server will be running at http://localhost:8000.
+  If everything is set up correctly, you should see the following message: {"Hello": "World"}
 
 ## Components
 
@@ -179,3 +174,4 @@ Contributions are welcome! Please follow these steps to contribute:
 - Push to the branch (git push origin feature/your-feature-name).
 - Create a new Pull Request.
 
+## Resources and References
