@@ -18,6 +18,38 @@ __version__ = "1.0.0"
 
 import networkx as nx
 
+# just an eample for the structure of the schedule to be returned and to check the frontend and backend connection
+example_schedule = [
+    {
+        "job_id": "3",
+        "node_id": 0,
+        "end_time": 20,
+        "deadline": 256,
+        "start_time": 0,
+    },
+    {
+        "job_id": "2",
+        "node_id": 0,
+        "end_time": 40,
+        "deadline": 300,
+        "start_time": 20,
+    },
+    {
+        "job_id": "1",
+        "node_id": 0,
+        "end_time": 60,
+        "deadline": 250,
+        "start_time": 40,
+    },
+    {
+        "job_id": "0",
+        "node_id": 0,
+        "end_time": 80,
+        "deadline": 250,
+        "start_time": 60,
+    },
+]
+
 
 def ldf_singlecore(application_data):
     """
@@ -37,7 +69,7 @@ def ldf_singlecore(application_data):
                       and start/end times relative to other jobs.
     """
 
-    pass
+    return {"schedule": example_schedule}
 
 
 def edf_singlecore(application_data):
@@ -58,7 +90,7 @@ def edf_singlecore(application_data):
                       and the job's deadline.
     """
 
-    pass
+    return {"schedule": example_schedule}
 
 
 def rms_singlecore(application_data):
@@ -76,7 +108,7 @@ def rms_singlecore(application_data):
                       and the job's deadline.
 
     """
-    pass
+    return {"schedule": example_schedule}
 
 
 def ll_singlecore(application_data):
@@ -94,4 +126,4 @@ def ll_singlecore(application_data):
                       and the job's deadline.
 
     """
-    pass
+    return {"schedule": example_schedule}

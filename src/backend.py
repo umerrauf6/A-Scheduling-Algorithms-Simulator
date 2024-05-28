@@ -82,12 +82,12 @@ def schedule_jobs(data: dict):
     print("Received JSON data:", json.dumps(data, indent=4))
 
     ## Validate the input as per input schema
-    try:
-        validate(instance=data, schema=input_schema)
-        print("Input data is valid.")
-    except jsonschema.exceptions.ValidationError as err:
-        print("Input data is invalid:", err)
-        raise HTTPException(400, "Invalid Input schema")
+    ##try:
+    ##    validate(instance=data, schema=input_schema)
+    ##    print("Input data is valid.")
+    ## except jsonschema.exceptions.ValidationError as err:
+    ##    print("Input data is invalid:", err)
+    ##    raise HTTPException(400, "Invalid Input schema")
 
     application_data = data.get("application")
     platform_data = data.get("platform")
