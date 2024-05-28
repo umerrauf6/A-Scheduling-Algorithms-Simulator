@@ -15,7 +15,7 @@ This repository contains the backend server for the Task Scheduling front-end. T
 ## Getting Started
 
 1. Clone the repository:
-    git clone [https://github.com/linem-davton/graphdraw-eslab-backend.git](https://github.com/linem-davton/graphdraw-eslab-backend.git)
+    git clone [https://github.com/linem-davton/graphdraw-eslab-backend.git
 
 2. Navigate to the project directory:
     cd graphdraw-eslab-backend
@@ -23,12 +23,16 @@ This repository contains the backend server for the Task Scheduling front-end. T
 3. Install dependencies:
     pip install -r requirements.txt
 
-5. Start the development server:
+4. Start the development server:
    python3 src/backend.py
 
-6. Access the API:
+5. Access the API:
    The backend server will be running at http://localhost:8000.
   If everything is set up correctly, you should see the following message: {"Hello": "World"}
+
+6. To access the API documentation, go to http://localhost:8000/docs.
+
+7. Visit the frontend at [eslab2.pages.dev](https://eslab2.pages.dev/), and input the logical and platform model as defined in input schema to schedule tasks.
 
 ## Technologies Used
 
@@ -57,100 +61,168 @@ Learn more about [HTTP Methods](https://developer.mozilla.org/en-US/docs/Web/HTT
 
 The backend expects input in the following [JSON](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON) schema:
 
-    ```json
-    {
+
+This JSON Schema defines the structure for the input JSON model used by the scheduling algorithms. It ensures the correct format and validation of the input data.
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
     "application": {
-        "jobs": [
-        {
-            "id": <integer>,
-            "wcet_fullspeed": <integer>,
-            "mcet": <integer>,
-            "deadline": <integer>
+      "type": "object",
+      "properties": {
+        "jobs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "wcet": {
+                "type": "integer"
+              },
+              "mcet": {
+                "type": "integer"
+              },
+              "deadline": {
+                "type": "integer"
+              }
+            },
+            "required": ["id", "wcet", "mcet", "deadline"]
+          }
         },
-        ...
-        ],
-        "messages": [
-        {
-            "id": <integer>,
-            "sender": <integer>,
-            "receiver": <integer>,
-            "size": <integer>,
-            "timetriggered": <boolean>
-        },
-        ...
-        ]
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "sender": {
+                "type": "integer"
+              },
+              "receiver": {
+                "type": "integer"
+              },
+              "size": {
+                "type": "integer"
+              },
+              "timetriggered": {
+                "type": "integer"
+              }
+            },
+            "required": ["id", "sender", "receiver", "size", "timetriggered"]
+          }
+        }
+      },
+      "required": ["jobs", "messages"]
     },
     "platform": {
-        "nodes": [
-        {
-            "id": <integer>,
-            "is_router": <boolean>
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "required": ["id", "type"]
+          }
+        }
+      },
+      "required": ["nodes"]
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "start_node": {
+            "type": "integer"
+          },
+          "end_node": {
+            "type": "integer"
+          },
+          "link_delay": {
+            "type": "integer"
+          },
+          "bandwidth": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string"
+          }
         },
-        ...
-        ],
-        "links": [
-        {
-            "start": <integer>,
-            "end": <integer>
-        },
-        ...
-        ]
+        "required": ["id", "start_node", "end_node", "link_delay", "bandwidth", "type"]
+      }
     }
-    }
-    ```
+  },
+  "required": ["application", "platform", "links"]
+}
+```
+This schema defines the structure for the application and platform objects required by the scheduling algorithms. It ensures that:
+
+- Jobs: Each job has an id, wcet (worst case execution time), mcet (mean case execution time), and deadline (all integers).
+- Messages: Each message has an id, sender, receiver, size (all integers), and timetriggered (integer).
+- Nodes: Each node has an id (integer) and type (string).
+- Links: Each link has an id, start_node, end_node, link_delay, bandwidth (all integers), and type (string).
+By adhering to this schema, you can validate the input JSON model before processing it with the scheduling algorithms.
 
 ### Output Schema for /schedule_jobs
+This JSON Schema defines the structure for the output schedule generated by the scheduling algorithms. It ensures the correct format and validation of the output data.
 
-    The backend returns output in the following JSON format:
-
-    ```json
-    {
-    "schedule1": [
-        {
-        "job_id": <integer>,
-        "node_id": <integer>,
-        "end_time": <integer>,
-        "deadline": <integer>,
-        "start_time": <integer>,
-        "execution_time": <integer>
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "schedule": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "integer"
+          },
+          "node_id": {
+            "type": "integer"
+          },
+          "start_time": {
+            "type": "integer"
+          },
+          "end_time": {
+            "type": "integer"
+          },
+          "deadline": {
+            "type": "integer"
+          }
         },
-        ...
-    ],
-    "schedule2": [
-        {
-        "job_id": <integer>,
-        "node_id": <integer>,
-        "end_time": <integer>,
-        "deadline": <integer>,
-        "start_time": <integer>,
-        "execution_time": <integer>
-        },
-        ...
-    ],
-    "schedule3": [
-        {
-        "job_id": <integer>,
-        "node_id": <integer>,
-        "end_time": <integer>,
-        "deadline": <integer>,
-        "start_time": <integer>,
-        "execution_time": <integer>
-        },
-        ...
-    ],
-    "schedule4": [
-        {
-        "job_id": <integer>,
-        "node_id": <integer>,
-        "end_time": <integer>,
-        "deadline": <integer>,
-        "start_time": <integer>,
-        "execution_time": <integer>
-        },
-        ...
-    ]
+        "required": ["job_id", "node_id", "start_time", "end_time", "deadline"]
+      }
     }
-    ```
+  },
+  "required": ["schedule"]
+}
+```
+This schema defines the structure for the schedule object produced by the scheduling algorithms. It ensures that each scheduled item has:
+
+- job_id: The identifier of the job, which can be a string or integer.
+- node_id: The identifier of the node where the job is scheduled, which can be a string or integer.
+- start_time: The time when the job starts execution.
+- end_time: The time when the job finishes execution.
+- deadline: The deadline by which the job must be completed.
 
 
 ## Components
@@ -177,3 +249,5 @@ Contributions are welcome! Please follow these steps to contribute:
 - Create a new Pull Request.
 
 ## Resources and References
+1. Github Backend Repository: [Task Scheduling Backend](https://github.com/linem-davton/es-lab-task2)
+2. Github Frontend Repository: [Task Scheduling Frontend](https://github.com/linem-davton/graphdraw-frontend)
