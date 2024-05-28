@@ -15,16 +15,26 @@ This repository contains the backend server for the Task Scheduling front-end. T
 ## Getting Started
 
 1. Clone the repository:
+``` BASH
     git clone [https://github.com/linem-davton/graphdraw-eslab-backend.git
+```
 
 2. Navigate to the project directory:
-    cd graphdraw-eslab-backend
+    ``` BASH
+      cd graphdraw-eslab-backend
+    ```
 
 3. Install dependencies:
+    ``` BASH
     pip install -r requirements.txt
+    ```
 
 4. Start the development server:
-   python3 src/backend.py
+    ``` BASH 
+    cd src
+    python3 backend.py
+    ```
+   The backend server will start running on http://localhost:8000
 
 5. Access the API:
    The backend server will be running at http://localhost:8000.

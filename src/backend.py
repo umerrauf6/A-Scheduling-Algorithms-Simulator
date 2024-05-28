@@ -14,20 +14,36 @@ See the function docstrings within this module for more detailed API documentati
 __author__ = "Utkarsh Raj"
 __version__ = "1.0.0"
 
-from http.client import HTTPException
+
+from fastapi import HTTPException
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import json
-from config import SERVER_PORT, SERVER_HOST
+import jsonschema
+from jsonschema import validate
+import os
 
+from config import SERVER_PORT, SERVER_HOST
 import algorithms as alg
+
+
+script_dir = os.path.dirname(__file__)
+input_schema_file = os.path.join(script_dir, "input_schema.json")
+output_schema_file = os.path.join(script_dir, "output_schema.json")
+
+## Load the input and output schema
+with open(input_schema_file) as f:
+    input_schema = json.load(f)
+
+with open(output_schema_file) as f:
+    output_schema = json.load(f)
 
 app = FastAPI()
 origins = [
-    "https://localhost:3000",
     "http://localhost:3000",
     "http://localhost:3001",
+    "http://localhost:5173",
     "https://eslab2.pages.dev",
 ]
 app.add_middleware(
@@ -64,11 +80,17 @@ def schedule_jobs(data: dict):
     """
 
     print("Received JSON data:", json.dumps(data, indent=4))
+
+    ## Validate the input as per input schema
+    try:
+        validate(instance=data, schema=input_schema)
+        print("Input data is valid.")
+    except jsonschema.exceptions.ValidationError as err:
+        print("Input data is invalid:", err)
+        raise HTTPException(400, "Invalid Input schema")
+
     application_data = data.get("application")
     platform_data = data.get("platform")
-
-    if not application_data or not platform_data:
-        raise HTTPException(status_code=400, detail="Invalid data format")
 
     ldf_schedule = alg.ldf_singlecore(application_data)
     edf_schedule = alg.edf_singlecore(application_data)
@@ -81,6 +103,14 @@ def schedule_jobs(data: dict):
         "schedule3": rms_schedule,
         "schedule4": ll_schedule,
     }
+    ## Validate the schedules as per output schema
+    try:
+        for key, value in response.items():
+            validate(instance=value, schema=output_schema)
+            print(key, "Schedule is valid")
+    except jsonschema.exceptions.ValidationError as err:
+        print("Output data is not valid", err)
+        raise HTTPException(500, "Invalid Output Schema")
 
     print(json.dumps(response, indent=4))
     return response

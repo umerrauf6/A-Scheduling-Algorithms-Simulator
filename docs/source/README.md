@@ -15,16 +15,26 @@ This repository contains the backend server for the Task Scheduling front-end. T
 ## Getting Started
 
 1. Clone the repository:
+``` BASH
     git clone [https://github.com/linem-davton/graphdraw-eslab-backend.git
+```
 
 2. Navigate to the project directory:
-    cd graphdraw-eslab-backend
+    ``` BASH
+      cd graphdraw-eslab-backend
+    ```
 
 3. Install dependencies:
+    ``` BASH
     pip install -r requirements.txt
+    ```
 
 4. Start the development server:
-   python3 src/backend.py
+    ``` BASH 
+    cd src
+    python3 backend.py
+    ```
+   The backend server will start running on http://localhost:8000
 
 5. Access the API:
    The backend server will be running at http://localhost:8000.
@@ -78,7 +88,10 @@ This JSON Schema defines the structure for the input JSON model used by the sche
             "type": "object",
             "properties": {
               "id": {
-                "type": "integer"
+                "type": [
+                  "string",
+                  "integer"
+                ]
               },
               "wcet": {
                 "type": "integer"
@@ -90,7 +103,12 @@ This JSON Schema defines the structure for the input JSON model used by the sche
                 "type": "integer"
               }
             },
-            "required": ["id", "wcet", "mcet", "deadline"]
+            "required": [
+              "id",
+              "wcet",
+              "mcet",
+              "deadline"
+            ]
           }
         },
         "messages": {
@@ -99,13 +117,22 @@ This JSON Schema defines the structure for the input JSON model used by the sche
             "type": "object",
             "properties": {
               "id": {
-                "type": "integer"
+                "type": [
+                  "string",
+                  "integer"
+                ]
               },
               "sender": {
-                "type": "integer"
+                "type": [
+                  "string",
+                  "integer"
+                ]
               },
               "receiver": {
-                "type": "integer"
+                "type": [
+                  "string",
+                  "integer"
+                ]
               },
               "size": {
                 "type": "integer"
@@ -114,11 +141,20 @@ This JSON Schema defines the structure for the input JSON model used by the sche
                 "type": "integer"
               }
             },
-            "required": ["id", "sender", "receiver", "size", "timetriggered"]
+            "required": [
+              "id",
+              "sender",
+              "receiver",
+              "size",
+              "timetriggered"
+            ]
           }
         }
       },
-      "required": ["jobs", "messages"]
+      "required": [
+        "jobs",
+        "messages"
+      ]
     },
     "platform": {
       "type": "object",
@@ -129,17 +165,25 @@ This JSON Schema defines the structure for the input JSON model used by the sche
             "type": "object",
             "properties": {
               "id": {
-                "type": "integer"
+                "type": [
+                  "string",
+                  "integer"
+                ]
               },
               "type": {
                 "type": "string"
               }
             },
-            "required": ["id", "type"]
+            "required": [
+              "id",
+              "type"
+            ]
           }
         }
       },
-      "required": ["nodes"]
+      "required": [
+        "nodes"
+      ]
     },
     "links": {
       "type": "array",
@@ -147,13 +191,22 @@ This JSON Schema defines the structure for the input JSON model used by the sche
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer"
+            "type": [
+              "string",
+              "integer"
+            ]
           },
           "start_node": {
-            "type": "integer"
+            "type": [
+              "string",
+              "integer"
+            ]
           },
           "end_node": {
-            "type": "integer"
+            "type": [
+              "string",
+              "integer"
+            ]
           },
           "link_delay": {
             "type": "integer"
@@ -165,13 +218,25 @@ This JSON Schema defines the structure for the input JSON model used by the sche
             "type": "string"
           }
         },
-        "required": ["id", "start_node", "end_node", "link_delay", "bandwidth", "type"]
+        "required": [
+          "id",
+          "start_node",
+          "end_node",
+          "link_delay",
+          "bandwidth",
+          "type"
+        ]
       }
     }
   },
-  "required": ["application", "platform", "links"]
+  "required": [
+    "application",
+    "platform",
+    "links"
+  ]
 }
 ```
+
 This schema defines the structure for the application and platform objects required by the scheduling algorithms. It ensures that:
 
 - Jobs: Each job has an id, wcet (worst case execution time), mcet (mean case execution time), and deadline (all integers).
@@ -194,10 +259,16 @@ This JSON Schema defines the structure for the output schedule generated by the 
         "type": "object",
         "properties": {
           "job_id": {
-            "type": "integer"
+            "type": [
+              "string",
+              "integer"
+            ]
           },
           "node_id": {
-            "type": "integer"
+            "type": [
+              "string",
+              "integer"
+            ]
           },
           "start_time": {
             "type": "integer"
@@ -209,13 +280,22 @@ This JSON Schema defines the structure for the output schedule generated by the 
             "type": "integer"
           }
         },
-        "required": ["job_id", "node_id", "start_time", "end_time", "deadline"]
+        "required": [
+          "job_id",
+          "node_id",
+          "start_time",
+          "end_time",
+          "deadline"
+        ]
       }
     }
   },
-  "required": ["schedule"]
+  "required": [
+    "schedule"
+  ]
 }
 ```
+
 This schema defines the structure for the schedule object produced by the scheduling algorithms. It ensures that each scheduled item has:
 
 - job_id: The identifier of the job, which can be a string or integer.

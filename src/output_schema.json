@@ -8,10 +8,16 @@
         "type": "object",
         "properties": {
           "job_id": {
-            "type": "integer"
+            "type": [
+              "string",
+              "integer"
+            ]
           },
           "node_id": {
-            "type": "integer"
+            "type": [
+              "string",
+              "integer"
+            ]
           },
           "start_time": {
             "type": "integer"
