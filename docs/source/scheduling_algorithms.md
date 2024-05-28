@@ -74,7 +74,7 @@ Note the units of time are arbitrary but same across all properties.
 
 }
 ```
-
+### Example Scheduling Algorithms Output
 Given the example JSON model, the output of scheduling algorithms should be as follows:
 
 ``` json
@@ -107,8 +107,7 @@ It aims to delay job execution as much as possible while still meeting deadlines
 ``` PYTHON
 schedule = ldf_multicore(application_data, platform_data)
 ```
-
-## Example
+### Example
 
 
 ## Earliest Deadline First (EDF) for Multi-Core

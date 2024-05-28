@@ -6,8 +6,8 @@ Welcome to Embedded Systems Lab!
   :caption: Contents
 
   README.md
-  todo.rst
   scheduling_algorithms.rst
+  todo.rst
   modules.rst
 
 Indices and Tables
