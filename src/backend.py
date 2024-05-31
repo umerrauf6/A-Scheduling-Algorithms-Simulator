@@ -82,26 +82,28 @@ def schedule_jobs(data: dict):
     print("Received JSON data:", json.dumps(data, indent=4))
 
     ## Validate the input as per input schema
-    ##try:
-    ##    validate(instance=data, schema=input_schema)
-    ##    print("Input data is valid.")
-    ## except jsonschema.exceptions.ValidationError as err:
-    ##    print("Input data is invalid:", err)
-    ##    raise HTTPException(400, "Invalid Input schema")
+    try:
+        validate(instance=data, schema=input_schema)
+        print("Input data is valid.")
+    except jsonschema.exceptions.ValidationError as err:
+        print("Input data is invalid:", err)
+        raise HTTPException(400, "Invalid Input schema")
 
     application_data = data.get("application")
     platform_data = data.get("platform")
 
-    ldf_schedule = alg.ldf_singlecore(application_data)
-    edf_schedule = alg.edf_singlecore(application_data)
-    rms_schedule = alg.rms_singlecore(application_data)
-    ll_schedule = alg.ll_singlecore(application_data)
+    ldf_single_node = alg.ldf_single_node(application_data)
+    edf_single_node = alg.edf_single_node(application_data)
+    ll_multinode = alg.ll_multinode(application_data, platform_data)
+    ldf_multinode = alg.ldf_multinode(application_data, platform_data)
+    edf_multinode = alg.edf_multinode(application_data, platform_data)
 
     response = {
-        "schedule1": ldf_schedule,
-        "schedule2": edf_schedule,
-        "schedule3": rms_schedule,
-        "schedule4": ll_schedule,
+        "schedule1": ldf_single_node,
+        "schedule2": edf_single_node,
+        "schedule3": ll_multinode,
+        "schedule4": ldf_multinode,
+        "schedule5": edf_multinode,
     }
     ## Validate the schedules as per output schema
     try:

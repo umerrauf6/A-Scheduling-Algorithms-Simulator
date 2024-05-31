@@ -51,14 +51,13 @@ example_schedule = [
 ]
 
 
-def ldf_singlecore(application_data):
+def ldf_single_node(application_data):
     """
-    Schedule jobs on a single core using the Latest Deadline First (LDF) strategy.
+    Schedule jobs on a single node using the Latest Deadline First (LDF) strategy.
 
-    Similar to the multi-core version but optimized for a single core, this function schedules jobs based on
-    their latest deadlines after sorting them and considering dependencies through a directed graph representation.
+    This function schedules jobs based on their latest deadlines after sorting them and considering dependencies through a directed graph representation.
 
-    .. todo:: Implement Latest Dealine First Scheduling (LDF) algorithm.
+    .. todo:: Implement Latest Dealine First Scheduling (LDF) algorithm for single compute node.
 
 
     Args:
@@ -72,15 +71,15 @@ def ldf_singlecore(application_data):
     return {"schedule": example_schedule}
 
 
-def edf_singlecore(application_data):
+def edf_single_node(application_data):
     """
-    Schedule jobs on multiple cores using the Earliest Deadline First (EDF) strategy.
+    Schedule jobs on single node using the Earliest Deadline First (EDF) strategy.
 
-    This function processes application and platform data to organize and schedule jobs based on the earliest
+    This function processes application data to schedule jobs based on the earliest
     deadlines. It builds a dependency graph and schedules accordingly, ensuring that jobs with no predecessors are
     scheduled first, and subsequent jobs are scheduled based on the minimum deadline of available nodes.
 
-    .. todo:: Implement Earliest Deadline First Scheduling (EDF) algorithm.
+    .. todo:: Implement Earliest Deadline First Scheduling (EDF) algorithm for single compute node.
 
     Args:
         application_data (dict): Job data including dependencies represented by messages between jobs.
@@ -93,33 +92,54 @@ def edf_singlecore(application_data):
     return {"schedule": example_schedule}
 
 
-def rms_singlecore(application_data):
+def ll_multinode(application_data, platform_data):
     """
-    Schedule jobs on a single core using the Rate Monotonic Scheduling (RMS) strategy.
-    This function schedules jobs based on their periods and deadlines, with the shortest period job being scheduled first.
-
-    .. todo:: Implement Rate Monotonic Scheduling (RMS) algorithm.
-
-    Args:
-        application_data (dict): Job data including dependencies represented by messages between jobs.
-
-    Returns:
-        list of dict: Contains the scheduled job details, each entry detailing the node assigned, start and end times,
-                      and the job's deadline.
-
-    """
-    return {"schedule": example_schedule}
-
-
-def ll_singlecore(application_data):
-    """
-    Schedule jobs on a single core using the Least Laxity (LL) strategy.
+    Schedule jobs on a distributed system with multiple compute nodes using the Least Laxity (LL) strategy.
     This function schedules jobs based on their laxity, with the job having the least laxity being scheduled first.
 
-    .. todo:: Implement Least Laxity (LL) algorithm.
+    .. todo:: Implement Least Laxity (LL) algorithm to schedule jobs on multiple node in a distributed system.
 
     Args:
         application_data (dict): Job data including dependencies represented by messages between jobs.
+
+    Returns:
+        list of dict: Contains the scheduled job details, each entry detailing the node assigned, start and end times,
+                      and the job's deadline.
+
+    """
+    return {"schedule": example_schedule}
+
+
+def ldf_multinode(application_data, platform_data):
+    """
+    Schedule jobs on a distributed system with multiple compute nodes using the Latest Deadline First(LDF) strategy.
+    This function schedules jobs based on their periods and deadlines, with the shortest period job being scheduled first.
+
+    .. todo:: Implement Latest Deadline First(LDF) algorithm to schedule jobs on multiple nodes in a distributed system.
+
+    Args:
+        application_data (dict): Job data including dependencies represented by messages between jobs.
+        platform_data (dict): Contains information about the platform, nodes and their types, the links between the nodes and the associated link delay.
+
+    Returns:
+        list of dict: Contains the scheduled job details, each entry detailing the node assigned, start and end times,
+                      and the job's deadline.
+
+    """
+    return {"schedule": example_schedule}
+
+
+def edf_multinode(application_data, platform_data):
+    """
+    Schedule jobs on a distributed system with multiple compute nodes using the Earliest Deadline First (EDF) strategy.
+    This function processes application data to schedule jobs based on the earliest
+    deadlines.
+
+    .. todo:: Implement Earliest Deadline First(EDF) algorithm to schedule jobs on multiple nodes in a distributed system.
+
+    Args:
+        application_data (dict): Job data including dependencies represented by messages between jobs.
+        platform_data (dict): Contains information about the platform, nodes and their types, the links between the nodes and the associated link delay.
 
     Returns:
         list of dict: Contains the scheduled job details, each entry detailing the node assigned, start and end times,

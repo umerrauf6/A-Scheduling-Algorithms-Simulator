@@ -145,8 +145,7 @@ This JSON Schema defines the structure for the input JSON model used by the sche
               "id",
               "sender",
               "receiver",
-              "size",
-              "timetriggered"
+              "size"
             ]
           }
         }
@@ -179,60 +178,60 @@ This JSON Schema defines the structure for the input JSON model used by the sche
               "type"
             ]
           }
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": [
+                  "string",
+                  "integer"
+                ]
+              },
+              "start_node": {
+                "type": [
+                  "string",
+                  "integer"
+                ]
+              },
+              "end_node": {
+                "type": [
+                  "string",
+                  "integer"
+                ]
+              },
+              "link_delay": {
+                "type": "integer"
+              },
+              "bandwidth": {
+                "type": "integer"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "start_node",
+              "end_node",
+              "link_delay",
+              "bandwidth",
+              "type"
+            ]
+          }
         }
       },
       "required": [
-        "nodes"
+        "nodes",
+        "links"
       ]
-    },
-    "links": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": [
-              "string",
-              "integer"
-            ]
-          },
-          "start_node": {
-            "type": [
-              "string",
-              "integer"
-            ]
-          },
-          "end_node": {
-            "type": [
-              "string",
-              "integer"
-            ]
-          },
-          "link_delay": {
-            "type": "integer"
-          },
-          "bandwidth": {
-            "type": "integer"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "start_node",
-          "end_node",
-          "link_delay",
-          "bandwidth",
-          "type"
-        ]
-      }
     }
   },
   "required": [
     "application",
-    "platform",
-    "links"
+    "platform"
   ]
 }
 ```
