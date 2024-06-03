@@ -5,7 +5,7 @@
     "application": {
       "type": "object",
       "properties": {
-        "jobs": {
+        "tasks": {
           "type": "array",
           "items": {
             "type": "object",
@@ -74,7 +74,7 @@
         }
       },
       "required": [
-        "jobs",
+        "tasks",
         "messages"
       ]
     },

@@ -7,7 +7,7 @@
       "items": {
         "type": "object",
         "properties": {
-          "job_id": {
+          "task_id": {
             "type": [
               "string",
               "integer"
@@ -30,7 +30,7 @@
           }
         },
         "required": [
-          "job_id",
+          "task_id",
           "node_id",
           "start_time",
           "end_time",
