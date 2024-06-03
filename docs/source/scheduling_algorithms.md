@@ -6,15 +6,15 @@ This document explains the four scheduling algorithms implemented in this projec
 ## Overview
 
 The scheduling algorithms covered are:
-1. Latest Deadline First (LDF) for Multi-Core
-2. Earliest Deadline First (EDF) for Multi-Core
-3. Latest Deadline First (LDF) for Single-Core
-4. Earliest Deadline First (EDF) for Single-Core
+1. Latest Deadline First (LDF) for Multi-Node
+2. Earliest Deadline First (EDF) for Multi-Node
+3. Latest Deadline First (LDF) for Single-Node
+4. Earliest Deadline First (EDF) for Single-Node
 
 ## JSON Logical Model
 
 The JSON logical model consists of:
-- **Jobs**: Represent the tasks to be scheduled.
+- **Tasks**: Represent the tasks to be scheduled.
 - **Messages**: Represent dependencies between jobs.
 - **Nodes**: Represent the processors or cores where jobs can be executed or the switches and routers in the network.
 - **Links**: Represent the communication links between nodes and has the bandwidth and latency information.
@@ -26,7 +26,7 @@ Note the units of time are arbitrary but same across all properties.
 ```json
 {
   "application": {
-    "jobs": [
+    "Tasks": [
       {
         "id": "1",
         "wcet": 5,
@@ -82,14 +82,14 @@ Given the example JSON model, the output of scheduling algorithms should be as f
 {
     "schedule": [
         {
-            "job_id": "1",
+            "task_id": "1",
             "node_id": "1",
             "start_time": 0,
             "end_time": 5,
             "deadline": 10
         },
         {
-            "job_id": 2,
+            "task_id": 2,
             "node_id": 2,
             "start_time": 7,
             "end_time": 10,
@@ -98,7 +98,7 @@ Given the example JSON model, the output of scheduling algorithms should be as f
     ]
 }
 ```
-## Latest Deadline First (LDF) for Multi-Core
+## Latest Deadline First (LDF) for Multi-Node
 
 The Latest Deadline First (LDF) algorithm schedules jobs based on the latest deadlines. 
 It aims to delay job execution as much as possible while still meeting deadlines, to allow more urgent jobs to execute first. Among these leaf nodes, the one with the latest deadline is selected to be scheduled last. Last process to execute is the one on which no other process depends that has the latest deadline.   Proceed  each  time  choosing  from  among  the  processes  whose  dependents  have already been scheduled.  LDF schedule respects all precedences and meets all deadlines.
@@ -112,7 +112,7 @@ schedule = ldf_multicore(application_data, platform_data)
 ### Example
 
 
-## Earliest Deadline First (EDF) for Multi-Core
+## Earliest Deadline First (EDF) for Multi-Node
 
 The Earliest Deadline First (EDF) algorithm schedules jobs based on the earliest deadlines. 
 It prioritizes jobs with the nearest deadlines to ensure that all deadlines are met as soon as possible. EDF scheduling gives priority to tasks based on the imminence of their deadlines.  The task with the closest deadline is scheduled first.  Given n independent processes with deadlines, d1, . . . , dn, schedule them to minimize the maximum lateness, defined by the following equation,
@@ -121,7 +121,7 @@ It prioritizes jobs with the nearest deadlines to ensure that all deadlines are 
 
 
 where f<sub>i</sub> is the finishing time of process 'i'.  Note that the above equation is negative if all deadlines are  met.   EDF  is  widely  used  in  systems  where  meeting  deadlines  is  crucial,  such  as  in multimedia systems for audio/video processing to ensure smooth streaming without delays. EDF ensures that tasks with the earliest deadlines are executed first. By prioritizing tasks based on their deadlines, EDF minimizes the chances of missing deadlines and helps meet real time  requirements.   EDF  maximizes  CPU  utilization  by  allowing  tasks  to  execute as soon as their deadlines arrive, as long as the  CPU is available. EDF provides predictability in terms of task execution times and deadlines.  The scheduling decisions are deterministic and can be analyzed and predicted in advance, which is crucial for real-time systems.  EDF can handle both periodic and aperiodic tasks, making it suitable for a wide range of real-time systems. It allows for dynamic task creation and scheduling without disrupting the execution of existing tasks.
-## EDF and LDF for Single-Core
+## EDF and LDF for Single-Node
 The Earliest Deadline First (EDF) and Latest Deadline First (LDF) algorithms for single-core systems schedules jobs similarly to the multi-core version but considers only one processor. 
 The Least Deadline First (LDF) scheduling strategy starts by identifying the endpoint of the schedule.  The LDF scheduling strategy builds a schedule backwards.  Given a DAG, choose  the  leaf  node  with  the  latest  deadline  to  be  scheduled  last,  and  work  backwards. 
 

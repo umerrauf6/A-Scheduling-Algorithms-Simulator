@@ -1,6 +1,6 @@
 {
   "application": {
-    "jobs": [
+    "tasks": [
       {
         "id": 0,
         "wcet_fullspeed": 20,
