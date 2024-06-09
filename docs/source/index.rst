@@ -7,7 +7,8 @@ Welcome to Embedded Systems Lab!
   
   task_sheet.md
   README.md
-  scheduling_algorithms.rst
+  schedule-visualization-frontend.md
+  scheduling_algorithms.md
   todo.rst
   modules.rst
 
