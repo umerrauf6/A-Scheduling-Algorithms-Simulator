@@ -316,11 +316,7 @@ This schema defines the structure for the schedule object produced by the schedu
 - **backend.py**: Main entry point for the FastAPI backend server.
     - Handles API endpoints and routing.
     - Configures CORS middleware.
-- **algorithms.py**: Contains the implementation of the scheduling algorithms (LDF, EDF).
-    - ldf_algorithm: Implementation of the LDF scheduling algorithm.
-    - edf_schedule: Implementation of the EDF scheduling algorithm.
-    - ldf_singlecore: Implementation of the single-core LDF scheduling algorithm.
-    - edf_singlecore: Implementation of the single-core EDF scheduling algorithm.
+- **algorithms.py**: Contains the implementation of the scheduling algorithms (LDF, EDF, LL).
 - **config.json**: Configuration file for backend settings.
 - **requirements.txt**: File listing all the dependencies required for the project.
 

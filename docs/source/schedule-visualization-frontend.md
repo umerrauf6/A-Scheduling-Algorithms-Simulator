@@ -12,15 +12,15 @@ This project is a React-based frontend designed to visualize task schedules alon
 ## Features
 
 
-- **Upload JSON File**: Also, one can upload a JSON file to visualize a pre-defined Application model.
+- **Upload JSON File**: Upload a JSON file with application and platform model as defined in [schema](https://eslab2docs.pages.dev/README#api-input-schema-for-schedule-jobs) to visualize the model.
 
-- **Add Nodes and Edges**: Users can create a graph of the Application model by adding nodes and edges interactively through the interface.
+- **Add Nodes and Edges**: Modify the existing application and platform model by adding tasks, dependencies, nodes, and links.
 
-- **Graph Visualization**: The application provides a clear visualization of the Application model, making it easy to understand task dependencies.
+- **Graph Visualization**: Clear visualization of the application and platform models, making it easy to understand task dependencies and node links.
 
-- **Scheduling Algorithms**: The application can schedule the graph using five different algorithms, offering flexibility and multiple approaches.
+- **Scheduling Algorithms**: Schedule the graph using five different algorithms, with changes in input model reflected automatically.
 
-- **Schedule Visualization**: Users can visualize the resulting schedules in a bar graph format, providing a clear overview of the task timeline.
+- **Schedule Visualization**: Visualize the resulting schedules in a bar graph format, providing a clear overview of the task timeline.
 
 - **Cross-Platform Compatibility**: The application works seamlessly across different devices and browsers.
 
@@ -28,7 +28,7 @@ This project is a React-based frontend designed to visualize task schedules alon
 ## For Users
  ### Accessing the Application
 
-  - Open the web browser and navigate to the application URL [eslab2.pages.dev](https://eslab2.pages.dev/).
+  - Accesible at [eslab2.pages.dev](https://eslab2.pages.dev/).
 
   - **Upload JSON File**: Click on the "Upload JSON" button to upload a pre-defined Application model. The  JSON file should follow the input schema defined at [eslab2docs](https://eslab2docs.pages.dev/README#api-input-schema-for-schedule-jobs).
   - **Load Default Json**: Loads default application and platform model.
@@ -68,11 +68,16 @@ This project is a React-based frontend designed to visualize task schedules alon
       - **'1'** will add a task.
       - **'2'** will add a dependency.
       - **'w'** will cycle through the tasks.
+      - **'d'** will delete the selected task.
+         
    
    - **When Platform Model is selected**:
       - **'1'** will add a node.
       - **'2'** will add a link.
       - **'w'** will cycle through the links.
+      - **'d'** will delete the selected link.
+      
+   - **Zooming and Panning** - Select a model then use the mouse wheel to zoom in and out and click and drag to pan.
 
 ### Visualizing Schedules
 
