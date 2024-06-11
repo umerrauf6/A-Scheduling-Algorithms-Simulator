@@ -114,7 +114,7 @@ def schedule_jobs(data: dict):
         print("Output data is not valid", err)
         raise HTTPException(500, "Invalid Output Schema")
 
-    # print(json.dumps(response, indent=4))
+    print(json.dumps(response, indent=4))
     return response
 
 

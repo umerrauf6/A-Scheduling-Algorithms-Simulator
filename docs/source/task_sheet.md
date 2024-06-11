@@ -42,7 +42,7 @@ In multi-node scheduling, the tasks can be distributed across different compute 
 
 ## Tasks
 
-  - Implement the following [scheduling algorithms](scheduling_algorithms.md) as outlined in [to-do list](todo.rst). These algorithms should take json inputs describing the platform model and application model, the input json conforming to the JSON schema defined in the [input json schema](README.md#api-input-schema-for-schedule-jobs). They should produce a schedule output that adheres to the JSON schema defined in the [output json schema](README.md#output-schema-for-schedule-jobs).
+  - Implement the following [scheduling algorithms](scheduling_algorithms.md) as outlined in [to-do list](todo.rst). These algorithms should take json inputs describing the platform model and application model, the input json conforms to the JSON schema defined in the [input json schema](README.md#api-input-schema-for-schedule-jobs). They should produce a schedule output that adheres to the JSON schema defined in the [output json schema](README.md#output-schema-for-schedule-jobs).
     - Latest Deadline First Single Node (LDF).
     - Earliest Deadline First Single Node (EDF).
     - Least Laxity Multi Node (LLF).

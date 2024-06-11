@@ -136,7 +136,7 @@ We will use the following JSON model describing the application and platform mod
 }
 ```
 ### Example Scheduling Algorithms Output
-Given the example JSON input, the output of a scheduling algorithms can be as follows:
+Given the example JSON input, an example output of a scheduling algorithms that conforms to [output schema](README.md#output-schema-for-schedule-jobs) would be as follows:
 
 ``` json
 {

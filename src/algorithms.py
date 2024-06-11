@@ -68,7 +68,7 @@ def ldf_single_node(application_data):
                       and start/end times relative to other jobs.
     """
 
-    return {"schedule": example_schedule}
+    return {"schedule": example_schedule, "name": "LDF Single Node"}
 
 
 def edf_single_node(application_data):
@@ -89,7 +89,7 @@ def edf_single_node(application_data):
                       and the job's deadline.
     """
 
-    return {"schedule": example_schedule}
+    return {"schedule": example_schedule, "name": "EDF Single Node"}
 
 
 def ll_multinode(application_data, platform_data):
@@ -107,7 +107,7 @@ def ll_multinode(application_data, platform_data):
                       and the job's deadline.
 
     """
-    return {"schedule": example_schedule}
+    return {"schedule": example_schedule, "name": "LL Multi Node"}
 
 
 def ldf_multinode(application_data, platform_data):
@@ -126,7 +126,7 @@ def ldf_multinode(application_data, platform_data):
                       and the job's deadline.
 
     """
-    return {"schedule": example_schedule}
+    return {"schedule": example_schedule, "name": "LDF Multi Node"}
 
 
 def edf_multinode(application_data, platform_data):
@@ -146,4 +146,4 @@ def edf_multinode(application_data, platform_data):
                       and the job's deadline.
 
     """
-    return {"schedule": example_schedule}
+    return {"schedule": example_schedule, "name": "EDF Multi Node"}
