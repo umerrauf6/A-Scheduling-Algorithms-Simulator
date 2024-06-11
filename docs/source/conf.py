@@ -49,6 +49,10 @@ myst_url_schemes = [
     "https",
 ]  # Ensures that standard web protocols are recognized
 
+myst_enable_extensions = [
+    "dollarmath",  # Enables dollar symbol for inline math
+    "amsmath",  # Allows more complex math formatting
+]
 
 source_suffix = {
     ".rst": "restructuredtext",
