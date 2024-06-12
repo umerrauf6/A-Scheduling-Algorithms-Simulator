@@ -24,7 +24,6 @@ This project is a React-based frontend designed to visualize task schedules alon
 
 - **Cross-Platform Compatibility**: The application works seamlessly across different devices and browsers.
 
-
 ## For Users
  ### Accessing the Application
 
@@ -44,7 +43,15 @@ This project is a React-based frontend designed to visualize task schedules alon
 
   - **Delete Mode**: The tasks and Edges can be deleted by first clicking on the "Delete Mode" button then selecting the task or edge you want to delete.
 
-  - **Generate Random Application Model**: Generate a random application model by entering the number of tasks. 
+  - **Generate Random Application Model**: Generate a random application model based on following parameters.
+    - Tasks (+int): Number of tasks within the application model.
+    - Max WCET (+int): Maximum Worst-Case Execution Time. For any task, WCET is chosen randomly between minWCET and maxWCET.
+    - Min WCET (+int): Minimum Worst-Case Execution Time. Must be lower than Max WCET.
+    - Min MCET (+int): Minimum Mean-Cycle Execution Time. Must be smaller than Max WCET. The MCET for task is chosen randomly between Min MCET and task's WCET.
+    - Deadline-WCET Offset (+int): The minimum offset between the worst-case execution time and the task deadline. This ensures task's deadline always exceeds its WCET.
+    - Max Deadline (+int): The maximum permissible deadline for any task within the application. Deadlines are chosen randomly between task's WCET + DeadlineOffset and Max Deadline.
+    - Link Probability (+float): Probability that a link exists between any two tasks. This is used to randomly establish connections based on the likelihood provided. Link proability falls linearly as ditance between tasks increases.
+    - Maximum Message Size (+int): The maximum size of messages that can be sent between tasks. This parameter impacts the simulation of data flow and network load.
 
   - **Visualizing the Application Model**: The Application model will be displayed as a directed acyclic graph. Nodes represent tasks, and edges represent dependencies between tasks.
 
@@ -56,7 +63,15 @@ This project is a React-based frontend designed to visualize task schedules alon
 
   - **Delete Mode**: The nodes and links can be deleted by first clicking on the "Delete Mode" button then selecting the node or link you want to delete.
 
-  - **Generate Random Platform Model**: Generate a random platform model by entering the number of nodes. 
+  - **Generate Random Platform Model**: Generate a random platform model based on following parameters:
+    - Compute Units (+int): Number of compute nodes in the model. These nodes are responsible for processing tasks and executing computations.
+    - Router (+int): Number of routers within the network. Routers manage the traffic between compute, sensor and actuator nodes and facilitate message passing.
+    - Sensors (+int): Number of sensors integrated into the platform. Sensors gather data from the environment, which may influence task processing.
+    - Actuators (+int): Number of actuators. Actuators are the devices that perform physical actions based on computational decisions.
+    - Maximum Link Delay (+int): The maximum delay, in time units, that any link can introduce in the communication. The delay is randomly chosen between the minimum and maximum link delay.
+    - Minimum Link Delay (+int): The minimum delay on any communication link.
+    - Maximum Bandwidth (+int): The maximum bandwidth available on network links, determining the data carrying capacity. The bandwidth is chosen randomly between the minimum and maximum bandwidth.
+    - Minimum Bandwidth (+int): The minimum bandwidth available, ensuring a base level of network performance.
 
   - **Visualizing the Platform Model**:The Platform Model will be displayed as a graph. Nodes represent nodes, and edges represent links between the nodes.
 
@@ -70,7 +85,6 @@ This project is a React-based frontend designed to visualize task schedules alon
       - **'w'** will cycle through the tasks.
       - **'d'** will delete the selected task.
          
-   
    - **When Platform Model is selected**:
       - **'1'** will add a node.
       - **'2'** will add a link.
@@ -90,7 +104,7 @@ This project is a React-based frontend designed to visualize task schedules alon
   - Any changes made in the application or platform model will be immediately reflected in the schedules.
 
 
-## For Developers
+## Contributing
 1. **Fork the front-end Repository**
   - Go to the project repositories
   - Frontend: [Github Repository](https://github.com/linem-davton/graphdraw-frontend.git).
