@@ -44,36 +44,36 @@ This project is a React-based frontend designed to visualize task schedules alon
   - **Delete Mode**: The tasks and Edges can be deleted by first clicking on the "Delete Mode" button then selecting the task or edge you want to delete.
 
   - **Generate Random Application Model**: Generate a random application model based on following parameters.
-    - Tasks (+int): Number of tasks within the application model.
-    - Max WCET (+int): Maximum Worst-Case Execution Time. For any task, WCET is chosen randomly between minWCET and maxWCET.
-    - Min WCET (+int): Minimum Worst-Case Execution Time. Must be lower than Max WCET.
-    - Min MCET (+int): Minimum Mean-Cycle Execution Time. Must be smaller than Max WCET. The MCET for task is chosen randomly between Min MCET and task's WCET.
-    - Deadline-WCET Offset (+int): The minimum offset between the worst-case execution time and the task deadline. This ensures task's deadline always exceeds its WCET.
-    - Max Deadline (+int): The maximum permissible deadline for any task within the application. Deadlines are chosen randomly between task's WCET + DeadlineOffset and Max Deadline.
-    - Link Probability (+float): Probability that a link exists between any two tasks. This is used to randomly establish connections based on the likelihood provided. Link proability falls linearly as ditance between tasks increases.
-    - Maximum Message Size (+int): The maximum size of messages that can be sent between tasks. This parameter impacts the simulation of data flow and network load.
+    - **Tasks (+int):** Number of tasks within the application model.
+    - **Max WCET (+int):** Maximum Worst-Case Execution Time. For any task, WCET is chosen randomly between minWCET and maxWCET.
+    - **Min WCET (+int):** Minimum Worst-Case Execution Time. Must be lower than Max WCET.
+    - **Min MCET (+int):** Minimum Mean-Cycle Execution Time. Must be smaller than Max WCET. The MCET for task is chosen randomly between Min MCET and task's WCET.
+    - **Deadline-WCET Offset (+int):** The minimum offset between the worst-case execution time and the task deadline. This ensures task's deadline always exceeds its WCET.
+    - **Max Deadline (+int):** The maximum permissible deadline for any task within the application. Deadlines are chosen randomly between task's WCET + DeadlineOffset and Max Deadline.
+    - **Link Probability (+float):** Probability that a link exists between any two tasks. This is used to randomly establish connections based on the likelihood provided. Link proability falls linearly as ditance between tasks increases.
+    - **Max Message Size (+int):** The maximum size of messages that can be sent between tasks. This parameter impacts the simulation of data flow and network load.
 
-  - **Visualizing the Application Model**: The Application model will be displayed as a directed acyclic graph. Nodes represent tasks, and edges represent dependencies between tasks.
+  - **Visualizing the Application Model**: The application model will be displayed as a directed acyclic graph. Nodes represent tasks, and edges represent dependencies between tasks.
 
 ### Creating Platform Model
    
-  - **Add Nodes and Links**: Create your own Platform model by selecting the "Platform model" on the screen. Use the "Add Node" button to create nodes individually and links using the "Add Link" button.
+  - **Add Nodes and Links**: Create your own platform model by selecting the *Platform Model* on the screen. Use the *Add Node* button to create nodes individually and links using the *Add Link* button.
 
   - **Sliders**: Link delay and bandwidth  can be adjusted by selecting the edge and adjusting the respective sliders.
 
   - **Delete Mode**: The nodes and links can be deleted by first clicking on the "Delete Mode" button then selecting the node or link you want to delete.
 
   - **Generate Random Platform Model**: Generate a random platform model based on following parameters:
-    - Compute Units (+int): Number of compute nodes in the model. These nodes are responsible for processing tasks and executing computations.
-    - Router (+int): Number of routers within the network. Routers manage the traffic between compute, sensor and actuator nodes and facilitate message passing.
-    - Sensors (+int): Number of sensors integrated into the platform. Sensors gather data from the environment, which may influence task processing.
-    - Actuators (+int): Number of actuators. Actuators are the devices that perform physical actions based on computational decisions.
-    - Maximum Link Delay (+int): The maximum delay, in time units, that any link can introduce in the communication. The delay is randomly chosen between the minimum and maximum link delay.
-    - Minimum Link Delay (+int): The minimum delay on any communication link.
-    - Maximum Bandwidth (+int): The maximum bandwidth available on network links, determining the data carrying capacity. The bandwidth is chosen randomly between the minimum and maximum bandwidth.
-    - Minimum Bandwidth (+int): The minimum bandwidth available, ensuring a base level of network performance.
+    - **Compute Nodes (+int):** Number of compute nodes in the model. These nodes are responsible for processing tasks and executing computations.
+    - **Routers (+int):** Number of routers within the network. Routers manage the traffic between compute, sensor and actuator nodes and facilitate message passing.
+    - **Sensors (+int):** Number of sensors integrated into the platform. Sensors gather data from the environment, which may influence task processing.
+    - **Actuators (+int):** Number of actuators. Actuators are the devices that perform physical actions based on computational decisions.
+    - **Max Link Delay (+int):** The maximum delay, in time units, that any link can introduce in the communication. The delay is randomly chosen between the minimum and maximum link delay.
+    - **Min Link Delay (+int):** The minimum delay on any communication link.
+    - **Max Bandwidth (+int):** The maximum bandwidth available on network links, determining the data carrying capacity. The bandwidth is chosen randomly between the minimum and maximum bandwidth.
+    - **Min Bandwidth (+int):** The minimum bandwidth available, ensuring a base level of network performance.
 
-  - **Visualizing the Platform Model**:The Platform Model will be displayed as a graph. Nodes represent nodes, and edges represent links between the nodes.
+  - **Visualizing the Platform Model**:The platform model will be displayed as a undirected graph. Nodes represent nodes, and edges represent links between the nodes.
 
 ### Hotkeys
    
