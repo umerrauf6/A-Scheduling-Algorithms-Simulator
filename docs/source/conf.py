@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath("../../src"))
 # -- Project information -----------------------------------------------------
 
 project = "Embedded Systems Lab"
-copyright = "2024, Utkarsh Raj"
+copyright = "2024, Universität Siegen"
 author = "Utkarsh Raj"
 
 # The full version, including alpha/beta/rc tags

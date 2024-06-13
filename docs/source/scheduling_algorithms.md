@@ -2,7 +2,7 @@
 
 ## Overview
 
-The scheduling algorithms covered are:
+The scheduling algorithms covered and to be implemented are:
 
 1. Earliest Deadline First (EDF) for Single-Node
 2. Latest Deadline First (LDF) for Single-Node
@@ -188,16 +188,24 @@ Given the example JSON input, an example output of a scheduling algorithms that 
 }
 ```
 
-## EDF and LDF for Single-Node
+## EDF and LDF Scheduling Algorithms
 
-The Earliest Deadline First (EDF) and Latest Deadline First (LDF) algorithms for single-node systems schedules jobs similarly to the multi-node version but considers only one compute node.
+The Earliest Deadline First (EDF) algorithm schedules jobs based on the earliest deadlines. It prioritizes jobs with the nearest deadlines to ensure that all deadlines are met as soon as possible. Given $n$ independent tasks with deadlines, $d_1,\ldots, d_n$, schedule them to minimize the maximum lateness, defined by the following equation,
+                                    
+$$L_{\text{max}} = \max_{1 \leq i \leq n} \{f_i - d_i\}$$
+
+
+where $f_i$ is the finishing time of task $i$.  Note that the above equation is negative if all deadlines are  met. EDF is  widely used in systems where meeting  deadlines is crucial, such as in multimedia systems for audio/video processing to ensure smooth streaming without delays. 
+The Latest Deadline First (LDF) algorithm schedules tasks based on the latest deadlines. It aims to delay task execution as much as possible while still meeting deadlines, to allow more urgent tasks to execute first. The algorithm to produce an LDF schedule proceeds in two stages: firstly, a precedence graph is constructed. Going from tail to head: among the tasks without successors or whose successors have been
+all selected, LDF selects the tasks with the latest deadline to be scheduled last.
+The Earliest Deadline First (EDF) and Latest Deadline First (LDF) algorithms for single-node systems, schedules jobs similarly to the multi-node version but considers only one compute node.
 
 ![alt text](./images/edf_and_ldf.PNG)
 
-*Figure 1: The LDF scheduling strategy in single node, the task with the latest deadline to be scheduled last, and work backwards.  In EDF, the task with the closest deadline is scheduled first.*
+*Figure 1: The LDF scheduling strategy in single node, the task with the latest deadline to be scheduled last, and work backwards.  In EDF scheduling strategy in single node, the task with the closest deadline is scheduled first.*
 ### Earliest Deadline First for Single Node 
 
-Say, we want to schedule the application model described by the DAG in Fig 1. Analyzing the order of tasks in the figure, Task 1 must be completed first because it is the starting task with no dependencies. Following Task 1, the next tasks to consider based on available dependencies are Tasks 3 and 2. Task 3 (d<sub>3</sub>=4) has an earlier deadline than task 2 (d<sub>2</sub>=5). Task 2 is scheduled after Task 3 as the next available task with the next closest deadline. Task 4 can only be scheduled after Task 2 is complete due to the dependency, even though Task 4 has an earlier deadline (d<sub>4</sub>=3) than task 2, its start is contingent on Task 2's completion. Tasks 5 and 6 follow based on their deadlines, d<sub>5</sub>=5 and d<sub>6</sub>=6, and dependencies.
+EDF scheduling for single node can be understood with an example as follows. Say, we want to schedule the application model described by the DAG in figure 1. Analyzing the order of tasks in the figure 1, task 1 must be completed first because it is the starting task with no dependencies. Following task 1, the next tasks to consider based on available dependencies are tasks 3 and 2. Task 3 ($d_3=4$) has an earlier deadline than task 2 ($d_2=5$). Task 2 is scheduled after task 3 as the next available task with the next closest deadline. Task 4 can only be scheduled after task 2 is complete due to the dependency, even though task 4 has an earlier deadline ($d_4=3$) than task 2, its start is contingent on task 2's completion. Tasks 5 and 6 follow based on their deadlines, $d_5=5$ and $d_6=6$, and dependencies.
 
 ### Usage
 
@@ -259,7 +267,7 @@ For the example JSON input, the output of the EDF single-node algorithm would be
 }
 ```
 ### Latest Deadline First for Single Node
-From the figure 1, Task 1 must be completed first because it is the starting task with no dependencies. Following Task 1, the next tasks to consider based on available dependencies are Tasks 3 and 2. Task 2 (d<sub>2</sub>=5) has the latest deadline than task 3 (d<sub>3</sub>=4). Task 4 can only be scheduled after Task 2 is complete. As the deadline for task 3 is d<sub>3</sub>=4 and task 4 is d<sub>4</sub>=3  . Tasks 5 and 6 follow based on their deadlines, d<sub>5</sub>=5 and d<sub>6</sub>=6, and dependencies.
+The LDF scheduling for single node can be understood with an example as follows. From the figure 1, task 1 must be completed first because it is the starting task with no dependencies. Following task 1, the next tasks to consider based on available dependencies are tasks 3 and 2. Task 2 ($d_2=5$) has the latest deadline than task 3 ($d_3=4$). Task 4 can only be scheduled after task 2 is complete. As the deadline for task 3 is $d_3=4$ and task 4 is $d_4=3$. Tasks 5 and 6 follow based on their deadlines, $d_5=5$ and $d_6=6$, and dependencies.
 
 
 ### Usage
@@ -322,16 +330,7 @@ For the example JSON input, the output of the LDF single-node algorithm would be
 ```
 
 ## Earliest Deadline First (EDF) for Multi-Node
-
-The Earliest Deadline First (EDF) algorithm schedules jobs based on the earliest deadlines. 
-It prioritizes jobs with the nearest deadlines to ensure that all deadlines are met as soon as possible. EDF scheduling gives priority to tasks based on the imminence of their deadlines.  The task with the closest deadline is scheduled first.  Given n independent processes with deadlines, d1, . . . , dn, schedule them to minimize the maximum lateness, defined by the following equation,
-                                    
-$$L_{\text{max}} = \max_{1 \leq i \leq n} \{f_i - d_i\}$$
-
-
-where f<sub>i</sub> is the finishing time of process 'i'.  Note that the above equation is negative if all deadlines are  met. EDF  is  widely  used  in  systems  where  meeting  deadlines  is  crucial,  such  as  in multimedia systems for audio/video processing to ensure smooth streaming without delays. 
-
-For example, when we want to schedule the application graph shown in Fig.1 on a three compute nodes. Node 1 might start with Task 1 (earliest starting task with no dependencies). As soon as Task 1 completes, Node 1 can take on Task 3, and Node 2 can begin Task 2 simultaneously since these tasks are now available and have the next earliest deadlines. Task 4 must wait for Task 2 to complete but could be started immediately on Node 3 if Task 2 finishes before Task 3. Task 5 and Task 6 would then be allocated based on their completion of respective dependencies.
+EDF scheduling for multi node can be understood with the following example. For example, when we want to schedule the application graph shown in figure 1 on three compute nodes. Node 1 might start with task 1 (earliest starting task with no dependencies). As soon as task 1 completes, node 1 can take on task 3, and node 2 can begin task 2 simultaneously since these tasks are now available and have the next earliest deadlines. Task 4 must wait for task 2 to complete but could be started immediately on node 3 if task 2 finishes before task 3. Task 5 and 6 would then be allocated based on their completion of respective dependencies.
 
 ### Usage
 
@@ -397,11 +396,7 @@ For the the example JSON model, the output of the EDF multi-node algorithm shoul
 ```
 
 ## Latest Deadline First (LDF) for Multi-Node
-
-
-The Latest Deadline First (LDF) algorithm schedules tasks based on the latest deadlines. 
-It aims to delay task execution as much as possible while still meeting deadlines, to allow more urgent tasks to execute first. Assume a system with 3 nodes, Node 1 starts with Task 1. Upon completion, if Node 2 and Node 3 are free, Task 2 and Task 3 can start simultaneously on different nodes, minimizing their laxity as they are now the most critical tasks available.
-Task 4 can start on any node that becomes free first, preferably the one that finishes Task 2 to keep the flow of dependencies smooth. Task 5 and Task 6 would then be allocated based on their completion of dependencies.
+The LDF scheduling for multi node can be understood with an example as follows.Assume a system with 3 nodes, node 1 starts with task 1. Upon completion, if node 2 and node 3 are free, task 2 and task 3 can start simultaneously on different nodes, minimizing their laxity as they are now the most critical tasks available. Task 4 can start on any node that becomes free first, preferably the one that finishes task 2 to keep the flow of dependencies smooth. Task 5 and 6 would then be allocated based on their completion of dependencies.
 
 
 ### Usage
@@ -467,9 +462,9 @@ For the the example JSON application model, the output of the LDF multi-node alg
 
 ## Least Laxity
 
-Laxity in scheduling algorithms is defined as the difference between a task’s deadline and the required CPU time to complete it.  This metric is crucial in dynamic preemptive scheduling where priorities are  adjusted dynamically based on current  task states and requirements. The task with the least laxity gets  the  highest  priority.  
+Laxity in scheduling algorithms is defined as the difference between a task’s deadline and the required CPU time to complete it.  This metric is crucial in dynamic preemptive scheduling where priorities are  adjusted dynamically based on current  task states and requirements. The task with the least laxity gets the highest  priority.  
 
-In figure 1, after Task 1, both Task 2 and Task 3 are ready for execution. At time 1, laxity of task  2 is $d_2 - e_2 = 5-1 = 3$. Laxity of task 3 is $d_3 - e_3 = 4-1 = 2$. Task 3 is selected as it has least laxity followed by task 2. Task 4, which depends on Task 2, can now start. Laxity of Task 4 at time 2 is $d_4 - e_4 = 3-1 = 2 $. With the lowest possible laxity, Task 4 gets scheduled immediately after Task 2, completing at time 3. Task 3 can now be executed, followed by Tasks 5 and 6. Their scheduling is straightforward as there are no remaining dependencies that affect their execution.
+In figure 1, after task 1, both task 2 and task 3 are ready for execution. At time 1, laxity of task  2 is $d_2 - e_2 = 5-1 = 3$. Laxity of task 3 is $d_3 - e_3 = 4-1 = 2$. Task 3 is selected as it has least laxity followed by task 2. Task 4, which depends on task 2, can now start. Laxity of task 4 at time 2 is $d_4 - e_4 = 3-1 = 2 $. With the lowest possible laxity, task 4 gets scheduled immediately after task 2, completing at time 3. Task 3 can now be executed, followed by tasks 5 and 6. Their scheduling is straightforward as there are no remaining dependencies that affect their execution.
 ### Usage
 
 ``` PYTHON
