@@ -6,19 +6,18 @@ It provides implementations for both Least Deadline First (LDF) and Earliest Dea
 Functions:
 - ldf_singlecore: Schedules tasks on a single-core processor using LDF.
 - edf_singlecore: Schedules tasks on a single-core processor using EDF.
-- rms_singlecore: Schedules tasks on a single-core processor using RMS.
 - ll_singlecore: Schedules tasks on a single-core processor using LL.
 - ldf_multicore: Schedules tasks on multiple cores using LDF.
 - edf_multicore: Schedules tasks on multiple cores using EDF.
 """
 
-__author__ = "Umer Rauf"
-__version__ = "1.0.0"
+__author__ = "Umer Rauf, Afnan Arshad"
+__version__ = "2.0.0"
 
 
 import networkx as nx
 
-# just an eample for the structure of the schedule to be returned and to check the frontend and backend connection
+# Example schedule to check the frontend and backend connection
 example_schedule = [
     {
         "task_id": "3",
@@ -68,9 +67,11 @@ def ldf_single_node(application_data):
     dependencies = application_data.get('messages', [])
 
     # Convert dependencies into a graph representation
-    dependency_graph = {job['id']: [] for job in jobs}
+    dependency_graph = nx.DiGraph()
+    for job in jobs:
+        dependency_graph.add_node(job['id'])
     for dependency in dependencies:
-        dependency_graph[dependency['receiver']].append(dependency['sender'])
+        dependency_graph.add_edge(dependency['sender'], dependency['receiver'])
 
     # Sort jobs by latest deadline first
     jobs_sorted = sorted(jobs, key=lambda x: x['deadline'], reverse=True)
@@ -87,7 +88,7 @@ def ldf_single_node(application_data):
 
         # Ensure all dependencies have been scheduled
         unscheduled_dependencies = [
-            dep for dep in dependency_graph[job_id] if dep not in jobs_scheduled]
+            dep for dep in dependency_graph.predecessors(job_id) if dep not in jobs_scheduled]
         if unscheduled_dependencies:
             jobs_sorted.append(job)  # Reinsert job at the end of the list
             # If only this job is left and still not schedulable, there's a cyclic dependency
@@ -98,7 +99,7 @@ def ldf_single_node(application_data):
 
         # All dependencies are scheduled, schedule this job
         max_dependency_end_time = 0
-        for dependency in dependency_graph[job_id]:
+        for dependency in dependency_graph.predecessors(job_id):
             max_dependency_end_time = max(max_dependency_end_time, job_start_times[dependency] + next(
                 j['wcet'] for j in jobs if j['id'] == dependency))
 
@@ -138,9 +139,11 @@ def edf_single_node(application_data):
     dependencies = application_data.get('messages', [])
 
     # Convert dependencies into a graph representation
-    dependency_graph = {job['id']: [] for job in jobs}
+    dependency_graph = nx.DiGraph()
+    for job in jobs:
+        dependency_graph.add_node(job['id'])
     for dependency in dependencies:
-        dependency_graph[dependency['receiver']].append(dependency['sender'])
+        dependency_graph.add_edge(dependency['sender'], dependency['receiver'])
 
     # Sort jobs by earliest deadline first
     jobs_sorted = sorted(jobs, key=lambda x: x['deadline'])
@@ -157,7 +160,7 @@ def edf_single_node(application_data):
 
         # Ensure all dependencies have been scheduled
         unscheduled_dependencies = [
-            dep for dep in dependency_graph[job_id] if dep not in jobs_scheduled]
+            dep for dep in dependency_graph.predecessors(job_id) if dep not in jobs_scheduled]
         if unscheduled_dependencies:
             jobs_sorted.append(job)  # Reinsert job at the end of the list
             # If only this job is left and still not schedulable, there's a cyclic dependency
@@ -168,7 +171,7 @@ def edf_single_node(application_data):
 
         # All dependencies are scheduled, schedule this job
         max_dependency_end_time = 0
-        for dependency in dependency_graph[job_id]:
+        for dependency in dependency_graph.predecessors(job_id):
             max_dependency_end_time = max(max_dependency_end_time, job_start_times[dependency] + next(
                 j['wcet'] for j in jobs if j['id'] == dependency))
 
@@ -207,9 +210,11 @@ def ll_multinode(application_data, platform_data):
     nodes = platform_data['nodes']
 
     # Convert dependencies into a graph representation
-    dependency_graph = {job['id']: [] for job in jobs}
+    dependency_graph = nx.DiGraph()
+    for job in jobs:
+        dependency_graph.add_node(job['id'])
     for dependency in dependencies:
-        dependency_graph[dependency['receiver']].append(dependency['sender'])
+        dependency_graph.add_edge(dependency['sender'], dependency['receiver'])
 
     # Initialize the schedule
     schedule = []
@@ -230,7 +235,7 @@ def ll_multinode(application_data, platform_data):
     while jobs:
         # Filter out jobs that are ready to be scheduled (all dependencies met)
         ready_jobs = [job for job in jobs if all(
-            dep in jobs_scheduled for dep in dependency_graph[job['id']])]
+            dep in jobs_scheduled for dep in dependency_graph.predecessors(job['id']))]
 
         if not ready_jobs:
             raise ValueError(
@@ -249,7 +254,7 @@ def ll_multinode(application_data, platform_data):
 
         # Ensure the job starts after all its dependencies have finished
         max_dependency_end_time = 0
-        for dependency in dependency_graph[job_id]:
+        for dependency in dependency_graph.predecessors(job_id):
             max_dependency_end_time = max(
                 max_dependency_end_time, job_end_times.get(dependency, 0))
 
@@ -293,9 +298,11 @@ def ldf_multinode(application_data, platform_data):
     nodes = platform_data['nodes']
 
     # Convert dependencies into a graph representation
-    dependency_graph = {job['id']: [] for job in jobs}
+    dependency_graph = nx.DiGraph()
+    for job in jobs:
+        dependency_graph.add_node(job['id'])
     for dependency in dependencies:
-        dependency_graph[dependency['receiver']].append(dependency['sender'])
+        dependency_graph.add_edge(dependency['sender'], dependency['receiver'])
 
     # Sort jobs by latest deadline first
     jobs_sorted = sorted(jobs, key=lambda x: x['deadline'], reverse=True)
@@ -318,7 +325,7 @@ def ldf_multinode(application_data, platform_data):
 
         # Ensure all dependencies have been scheduled
         unscheduled_dependencies = [
-            dep for dep in dependency_graph[job_id] if dep not in jobs_scheduled]
+            dep for dep in dependency_graph.predecessors(job_id) if dep not in jobs_scheduled]
         if unscheduled_dependencies:
             jobs_sorted.append(job)  # Reinsert job at the end of the list
             # If only this job is left and still not schedulable, there's a cyclic dependency
@@ -332,7 +339,7 @@ def ldf_multinode(application_data, platform_data):
 
         # Ensure the job starts after all its dependencies have finished
         max_dependency_end_time = 0
-        for dependency in dependency_graph[job_id]:
+        for dependency in dependency_graph.predecessors(job_id):
             max_dependency_end_time = max(max_dependency_end_time, job_start_times[dependency] + next(
                 j['wcet'] for j in jobs if j['id'] == dependency))
 
@@ -373,9 +380,11 @@ def edf_multinode(application_data, platform_data):
     nodes = platform_data['nodes']
 
     # Convert dependencies into a graph representation
-    dependency_graph = {job['id']: [] for job in jobs}
+    dependency_graph = nx.DiGraph()
+    for job in jobs:
+        dependency_graph.add_node(job['id'])
     for dependency in dependencies:
-        dependency_graph[dependency['receiver']].append(dependency['sender'])
+        dependency_graph.add_edge(dependency['sender'], dependency['receiver'])
 
     # Sort jobs by earliest deadline first
     jobs_sorted = sorted(jobs, key=lambda x: x['deadline'])
@@ -398,7 +407,7 @@ def edf_multinode(application_data, platform_data):
 
         # Ensure all dependencies have been scheduled
         unscheduled_dependencies = [
-            dep for dep in dependency_graph[job_id] if dep not in jobs_scheduled]
+            dep for dep in dependency_graph.predecessors(job_id) if dep not in jobs_scheduled]
         if unscheduled_dependencies:
             jobs_sorted.append(job)  # Reinsert job at the end of the list
             # If only this job is left and still not schedulable, there's a cyclic dependency
@@ -412,7 +421,7 @@ def edf_multinode(application_data, platform_data):
 
         # Ensure the job starts after all its dependencies have finished
         max_dependency_end_time = 0
-        for dependency in dependency_graph[job_id]:
+        for dependency in dependency_graph.predecessors(job_id):
             max_dependency_end_time = max(max_dependency_end_time, job_start_times[dependency] + next(
                 j['wcet'] for j in jobs if j['id'] == dependency))
 
